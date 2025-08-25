@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Data\Repository\Implementation\" />
     <Folder Include="Data\UnitOfWork\Implementation\" />
     <Folder Include="Data\UnitOfWork\Interface\" />

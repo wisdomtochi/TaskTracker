@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<TaskTrackerDbContext>(options =>
     options.UseMySql(
-        "Server=db25348.public.databaseasp.net;Database=db25348User=db25348;Pwd=cW!4-j5XG@h3;",
+        builder.Configuration.GetConnectionString("DefaultConnection"),
         new MariaDbServerVersion(new Version(10, 11, 11)) 
     ));
 

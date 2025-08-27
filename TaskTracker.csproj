@@ -12,15 +12,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Data\Repository\Implementation\" />
-    <Folder Include="Data\UnitOfWork\Implementation\" />
-    <Folder Include="Data\UnitOfWork\Interface\" />
+    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 </Project>

@@ -5,11 +5,6 @@ namespace TaskTracker.Data.Context
 {
     public class TaskTrackerDbContext : DbContext
     {
-        //public TaskTrackerDbContext()
-        //{
-            
-        //}
-
         public TaskTrackerDbContext(DbContextOptions<TaskTrackerDbContext> options) : base(options)
         {
 

@@ -16,6 +16,15 @@ builder.Services.AddDbContext<TaskTrackerDbContext>(options =>
         new MariaDbServerVersion(new Version(10, 11, 11)) 
     ));
 
+builder.Services.AddScoped<DBTransactionServiceFilterAttribute>();
+builder.Services.AddScoped<DBTransactionServiceFilterAttribute>();
+builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+builder.Services.AddControllers(opt =>
+{
+    opt.Filters.AddService<DBTransactionServiceFilterAttribute>();
+    opt.Filters.AddService<DBTransactionExceptionFilterAttribute>();
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

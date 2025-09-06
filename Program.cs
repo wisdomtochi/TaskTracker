@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using TaskTracker.Data.Context;
-using TaskTracker.Data.UnitOfWork.Implementation;
-using TaskTracker.Data.UnitOfWork.Interface;
+using TaskTracker.Data.Repository.Implementation;
+using TaskTracker.Data.Repository.Interface;
 using TaskTracker.Entities;
 using TaskTracker.Filters;
+using TaskTracker.Services.Implementation;
+using TaskTracker.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,8 @@ builder.Services.AddDbContext<TaskTrackerDbContext>(options =>
     ));
 
 builder.Services.AddScoped<DBTransactionEndpointFilterAttribute>();
-builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ITagService, TagService>();
 
 var app = builder.Build();
 
@@ -31,13 +34,12 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "Task Tracker API is running...");
 
-app.MapGet("/tags", async (IUnitOfWork<Tag> db) => 
+app.MapGet("/tags", async (ITagService tagService) => 
 { 
-    var results = await db.Repository.ReadAllAsync();
-    if (results.ToList().Count == 0) return [];
-
-    return results.ToList();
+    return Results.Ok(await tagService.GetAllTags());
 }).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
+
+//app.MapGet("/tag", async ())
 
 app.UseHttpsRedirection();
 

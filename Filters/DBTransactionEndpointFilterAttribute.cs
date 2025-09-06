@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using TaskTracker.Data.UnitOfWork.Interface;
 using TaskTracker.Entities;
 
 namespace TaskTracker.Filters

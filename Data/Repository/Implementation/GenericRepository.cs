@@ -9,13 +9,14 @@ namespace TaskTracker.Data.Repository.Implementation
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         private readonly TaskTrackerDbContext _dbContext;
-        private DbSet<T> table;
+        private readonly DbSet<T> table;
 
         public GenericRepository(TaskTrackerDbContext dbContext)
         {
             _dbContext = dbContext;
             table = _dbContext.Set<T>();
         }
+
         public async Task AddAsync(T entity)
         {
             entity.IsActive = true;
@@ -66,7 +67,7 @@ namespace TaskTracker.Data.Repository.Implementation
             return await table.FindAsync(EntityId);
         }
 
-        public void UpdateAsync(T entity)
+        public void Update(T entity)
         {
             entity.LastModifiedAt = DateTime.UtcNow;
 
@@ -74,9 +75,22 @@ namespace TaskTracker.Data.Repository.Implementation
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public void UpdateRangeAsync(IList<T> entities)
+        public void UpdateRange(IList<T> entities)
         {
             table.UpdateRange(entities.Select(e => { e.LastModifiedAt = DateTime.UtcNow; return e; }));
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            bool result = false;
+
+            try
+            {
+                result = await _dbContext.SaveChangesAsync() >= 0;
+            }
+            catch { throw; }
+
+            return result;
         }
     }
 }

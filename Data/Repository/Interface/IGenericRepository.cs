@@ -15,10 +15,11 @@
         Task<IEnumerable<T>> ReadAllAsync();
 
 
-        void UpdateAsync(T entity);
-        void UpdateRangeAsync(IList<T> entities);
+        void Update(T entity);
+        void UpdateRange(IList<T> entities);
 
         Task DeleteAsync(Guid EntityId);
         void DeleteRange(IList<T> entities);
+        Task<bool> SaveAsync();
     }
 }

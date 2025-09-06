@@ -13,5 +13,7 @@ namespace TaskTracker.Data.Context
         public virtual DbSet<Activity> Activities { get; set; }
 
         public virtual DbSet<Tag> Tags {  get; set; }
+
+        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }

@@ -1,31 +1,11 @@
 ﻿using TaskTracker.Entities;
-using TaskTracker.Models;
+using TaskTracker.Models.Response;
 
 namespace TaskTracker.Services
 {
     public static class Map
     {
-        public static List<TagDTO> ToTagResponseDTO(this IEnumerable<Tag> source)
-        {
-            return [.. source.Select(tag => new TagDTO
-            {
-                Id = tag.Id,
-                Name = tag?.Name ?? string.Empty,
-                DateCreated = tag.CreatedAt
-            })];
-        }
-
-        public static TagDTO ToTagResponseDTO(this Tag source)
-        {
-            return new TagDTO
-            {
-                Id = source.Id,
-                Name = source?.Name ?? string.Empty,
-                DateCreated = source.CreatedAt
-            };
-        }
-
-        public static List<ActivityDTO> ToActivitiesResponseDTO(this IEnumerable<Activity> source)
+        public static List<ActivityDTO> ToActivityResponseDTO(this IEnumerable<Activity> source)
         {
             return [.. source.Select(activity => new ActivityDTO
             {
@@ -34,7 +14,7 @@ namespace TaskTracker.Services
                 Description = activity.Description,
                 DueDate = activity.DueDate,
                 IsCompleted = activity.IsCompleted,
-                DateCreated = activity.CreatedAt,
+                DateCreated = activity.CreatedAt.ToString("MMM dd yyyy"),
             })];
         }
 
@@ -47,7 +27,7 @@ namespace TaskTracker.Services
                 Description = source.Description,
                 DueDate = source.DueDate,
                 IsCompleted = source.IsCompleted,
-                DateCreated = source.CreatedAt,
+                DateCreated = source.CreatedAt.ToString("MMM dd yyyy"),
             };
         }
     }

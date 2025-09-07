@@ -12,24 +12,11 @@ namespace TaskTracker.Data.Context
 
         public virtual DbSet<Activity> Activities { get; set; }
 
-        public virtual DbSet<Tag> Tags {  get; set; }
-
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Tag>().HasData(
-                new Tag
-                {
-                    Id = Guid.Parse("d290f1ee-6c54-4b01-90e6-d701748f0851"),
-                    Name = "Sample Tag",
-                    IsActive = true,
-                    CreatedAt = DateTime.UtcNow,
-                    LastModifiedAt = DateTime.UtcNow
-                }
-            );
 
             modelBuilder.Entity<Activity>().HasData(
                 new Activity

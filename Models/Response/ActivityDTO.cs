@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TaskTracker.Models
+namespace TaskTracker.Models.Response
 {
     public class ActivityDTO
     {
@@ -20,6 +20,6 @@ namespace TaskTracker.Models
         public bool IsCompleted { get; set; }
 
         [JsonProperty("dateCreated")]
-        public DateTime DateCreated { get; set; }
+        public string DateCreated { get; set; }
     }
 }

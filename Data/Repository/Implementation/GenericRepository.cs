@@ -64,7 +64,9 @@ namespace TaskTracker.Data.Repository.Implementation
 
         public async Task<T> ReadSingleAsync(Guid EntityId)
         {
-            return await table.FindAsync(EntityId);
+            var t = await table.FindAsync(EntityId);
+            if (!t.IsActive) return null;
+            return t;
         }
 
         public void Update(T entity)

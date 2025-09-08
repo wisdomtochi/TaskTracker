@@ -14,5 +14,6 @@ namespace TaskTracker.Services.Interface
         Task<List<ActivityDTO>> GetAllIncompleteActivitiesAsync();
         Task<string> SetActivityComplete(Guid id);
         Task<string> UpdateActivity(Guid id, ActivityDTOw model);
+        Task<string> UpdateDueDate(Guid id, DateTime newDueDate);
     }
 }

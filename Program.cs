@@ -110,6 +110,16 @@ app.MapGet("/activity/get-all/incomplete", async (IActivityService activityServi
     return Results.Ok(result);
 }).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
 
+app.MapPut("/activity/update-due-date/{id}", async (Guid id, DateTime newDueDate, IActivityService activityService) =>
+{
+    var result = await activityService.UpdateDueDate(id, newDueDate);
+    if (result == "Activity not found")
+    {
+        return Results.NotFound(result);
+    }
+    return Results.Ok(result);
+}).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

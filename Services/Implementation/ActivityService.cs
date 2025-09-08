@@ -22,7 +22,7 @@ namespace TaskTracker.Services.Implementation
                 Id = Guid.NewGuid(),
                 Title = model.Title,
                 Description = model.Description,
-                DueDate = model.DueDate,
+                DueDate = model?.DueDate ?? DateTime.UtcNow,
                 IsCompleted = false,
             };
 
@@ -75,7 +75,6 @@ namespace TaskTracker.Services.Implementation
 
             activity.Title = model.Title;
             activity.Description = model.Description;
-            activity.DueDate = model.DueDate;
 
             _activityRepository.Update(activity);
             await _activityRepository.SaveAsync();
@@ -117,6 +116,19 @@ namespace TaskTracker.Services.Implementation
             var activityDTOs = activity.ToActivityResponseDTO();
 
             return activityDTOs;
+        }
+
+        public async Task<string> UpdateDueDate(Guid id, DateTime newDueDate)
+        {
+            var activity =  await _activityRepository.ReadSingleAsync(id);
+            if (activity == null)
+                return "Activity not found";
+
+            activity.DueDate = newDueDate;
+
+            _activityRepository.Update(activity);
+            await _activityRepository.SaveAsync();
+            return "Activity due date updated successfully";
         }
     }
 }

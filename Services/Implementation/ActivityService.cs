@@ -88,11 +88,35 @@ namespace TaskTracker.Services.Implementation
             if (activity == null)
                 return "Activity not found";
 
-            activity.IsCompleted = true;
+            activity.IsCompleted = !activity.IsCompleted;
 
             _activityRepository.Update(activity);
             await _activityRepository.SaveAsync();
             return "Activity updated successfully";
+        }
+
+        public async Task<List<ActivityDTO>> GetAllCompleteActivitiesAsync()
+        {
+            var activity = await _activityRepository.ReadAllQuery()
+                                                    .AsNoTracking()
+                                                    .Where(x => x.IsCompleted)
+                                                    .ToListAsync();
+
+            var activityDTOs = activity.ToActivityResponseDTO();
+
+            return activityDTOs;
+        }
+
+        public async Task<List<ActivityDTO>> GetAllIncompleteActivitiesAsync()
+        {
+            var activity = await _activityRepository.ReadAllQuery()
+                                                    .AsNoTracking()
+                                                    .Where(x => !x.IsCompleted)
+                                                    .ToListAsync();
+
+            var activityDTOs = activity.ToActivityResponseDTO();
+
+            return activityDTOs;
         }
     }
 }

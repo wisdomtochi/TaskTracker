@@ -86,6 +86,30 @@ app.MapDelete("/activity/delete/{id}", async (Guid id, IActivityService activity
     return Results.Ok(result);
 }).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
 
+app.MapPut("/activity/mark-complete/{id}", async (Guid id, IActivityService activityService) =>
+{
+    var result = await activityService.SetActivityComplete(id);
+    if (result == "Activity not found")
+    {
+        return Results.NotFound(result);
+    }
+    return Results.Ok(result);
+}).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
+
+app.MapGet("/activity/get-all/complete", async (IActivityService activityService) =>
+{
+    var result = await activityService.GetAllCompleteActivitiesAsync();
+
+    return Results.Ok(result);
+}).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
+
+app.MapGet("/activity/get-all/incomplete", async (IActivityService activityService) =>
+{
+    var result = await activityService.GetAllIncompleteActivitiesAsync();
+
+    return Results.Ok(result);
+}).AddEndpointFilter<DBTransactionEndpointFilterAttribute>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

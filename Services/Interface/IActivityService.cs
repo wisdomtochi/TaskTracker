@@ -10,6 +10,8 @@ namespace TaskTracker.Services.Interface
         Task<ActivityDTO> GetActivityById(Guid id);
         Task<ActivityDTO> GetActivityByTitle(string title);
         Task<List<ActivityDTO>> GetAllActivities();
+        Task<List<ActivityDTO>> GetAllCompleteActivitiesAsync();
+        Task<List<ActivityDTO>> GetAllIncompleteActivitiesAsync();
         Task<string> SetActivityComplete(Guid id);
         Task<string> UpdateActivity(Guid id, ActivityDTOw model);
     }
